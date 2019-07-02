@@ -88,9 +88,9 @@ typedef enum {
 #define BIT_TEST(x,b)           (((x)&(BIT(b)))?1:0)
 #define BITS_TEST(x,bits)       (((x)&(bits))?1:0)
 
-#define MODULE_DECLEAR(name, n)      name##_t name##_module##n
-#define IMPORT_MODULE(name, n)      extern name##_t name##_module##n
-#define MODULE(name, n)             (&(name##_module##n))
+#define MODULE_DECLEAR(name, n)         name##_t name##_module##n
+#define IMPORT_MODULE(name, n)          extern name##_t name##_module##n
+#define MODULE(name, n)                 (&(name##_module##n))
 
 
 #ifdef __cplusplus

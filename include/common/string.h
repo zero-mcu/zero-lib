@@ -18,6 +18,13 @@
 extern "C"{
 #endif
 
+typedef struct {
+    int (*put_char)(int ch);
+    int (*get_char)(void);
+} ze_stdio_t;
+
+
+int stdio_init(ze_stdio_t* stdio);
 
 /**
  * @brief print format string to console.
@@ -32,13 +39,13 @@ int print(const char* fmt, ...);
  * @param char to be put to console
  * @return 0 for success, < 0 for failed.
  */
-extern int putchar(int ch);
+int stdio_putchar(int ch);
 
 /**
  * @brief get char from console
  * @return the char has been get from char, < 0 for failed.
  */
-extern int getchar(void);
+int stdio_getchar(void);
 
 #ifdef __cplusplus
 } // extern "C"

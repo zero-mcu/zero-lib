@@ -19,10 +19,9 @@
 extern "C"{
 #endif
 
-#define MODULE_SPI(n)      MODULE_DEFINE(spi, n)
+#define SPI_DECLEAR(n)     MODULE_DECLEAR(spi, n)
 #define IMPORT_SPI(n)      IMPORT_MODULE(spi, n)
 #define SPI(n)             MODULE(spi, n)
-
 
 #define SPI_READ        0
 #define SPI_WRITE       1
@@ -35,7 +34,7 @@ typedef enum {
     SPI_MODE_3,
 } spi_mode_t;
 
-typedef struct spi {
+typedef struct {
     void* private_data;
     struct spi_algorithm *algo;
 } spi_t;

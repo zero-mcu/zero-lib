@@ -1,4 +1,4 @@
-#include <common/string.h>
+#include <common/zero.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -19,8 +19,42 @@
 
 PUTCHAR_PROTOTYPE
 {
-    putchar(ch);
+    stdio_putchar(ch);
     return ch;
+}
+
+static ze_stdio_t* ze_stdio = NULL;
+
+int stdio_init(ze_stdio_t* stdio)
+{
+    ze_stdio = stdio;
+    return 0;
+}
+
+int stdio_putchar(int ch)
+{
+    if (ze_stdio && ze_stdio->put_char)
+        return ze_stdio->put_char(ch);
+    return -1;
+}
+
+
+int stdio_getchar(void)
+{
+    if (ze_stdio && ze_stdio->get_char)
+        return ze_stdio->get_char();
+    return -1;
+}
+
+int stdio_write(const char* wr_data, ze_size_t wr_len)
+{
+    int i = 0;
+    for (i = 0; i < wr_len; i++)
+    {
+        if (stdio_putchar(wr_data[i]) < 0)
+            break;
+    }
+    return i;
 }
 
 int print(const char* fmt, ...)
@@ -31,6 +65,6 @@ int print(const char* fmt, ...)
     va_start(args, fmt);
     ret = vsnprintf((char*)buffer, sizeof(buffer) - 1, fmt, args);
     va_end(args);
-    return ret;
+    return stdio_write(buffer, ret);
 }
 

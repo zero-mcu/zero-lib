@@ -37,6 +37,34 @@ extern "C"{
 
 #define SERIAL_RB_BUFSZ               100
 
+
+#define SERIAL_CONFIG   {115200,SERIAL_DATABITS_8,SERIAL_STOPBITS_1,SERIAL_PARITY_NONE}
+
+#define SERIAL_SET_CONFIG_DEFAULT(serial)       do {serial->config.baudrate = 115200;\
+                                                    serial->config.databits = SERIAL_DATABITS_8;\
+                                                    serial->config.stopbits = SERIAL_STOPBITS_1;\
+                                                    serial->config.parity = SERIAL_PARITY_NONE;\
+                                                } while(0)
+
+#define SERIAL_PARITY_NONE      0
+#define SERIAL_PARITY_EVEN      1
+#define SERIAL_PARITY_ODD       2
+
+#define SERIAL_DATABITS_7       7
+#define SERIAL_DATABITS_8       8
+#define SERIAL_DATABITS_9       8
+
+#define SERIAL_STOPBITS_1       0
+#define SERIAL_STOPBITS_1_5     1
+#define SERIAL_STOPBITS_2       2
+
+typedef struct {
+    ze_u32_t baudrate;
+    ze_u8_t parity;
+    ze_u8_t databits;
+    ze_u8_t stopbits;
+} serial_config_t;
+
 typedef struct serial_fifo {
     ze_u8_t *buffer;
     int put_index,get_index;
@@ -46,6 +74,7 @@ typedef struct serial_fifo {
 typedef struct serial {
     ze_u8_t flags;
     list_t node;
+    serial_config_t config;
     void *serial_rx;
     void *serial_tx;
     void *private_data;
@@ -54,8 +83,8 @@ typedef struct serial {
 
 typedef struct serial_operations {
     int (*init)(serial_t* serial);
-    int (*putc)(serial_t* serial, int ch);
-    int (*getc)(serial_t* serial);
+    int (*put_char)(serial_t* serial, int ch);
+    int (*get_char)(serial_t* serial);
     int (*config)(serial_t* serial, int cmd, void* arg);
 } serial_ops_t;
 

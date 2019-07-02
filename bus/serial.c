@@ -12,7 +12,7 @@ static int _serial_poll_write(struct serial *serial, const ze_u8_t* wr_data, ze_
 
     while(length)
     {
-        if(ops->putc(serial, *wr_data ++) < 0)
+        if(ops->put_char(serial, *wr_data ++) < 0)
             break;
         length --;
     }
@@ -29,7 +29,7 @@ static int _serial_poll_read(struct serial *serial, ze_u8_t *rd_data, ze_size_t 
 
     while(length)
     {
-        ch = ops->getc(serial);
+        ch = ops->get_char(serial);
         if(ch < 0)
             break;
         *rd_data ++  = ch;
@@ -151,7 +151,7 @@ void serial_hw_isr(struct serial* serial, ze_u8_t event)
             serial_fifo_t *rx_fifo = (serial_fifo_t*)serial->serial_rx;
             while(1)
             {
-                ch = ops->getc(serial);
+                ch = ops->get_char(serial);
                 if(ch == -1)
                     break;
                 rx_fifo->buffer[rx_fifo->put_index]=ch;
@@ -176,7 +176,7 @@ void serial_hw_isr(struct serial* serial, ze_u8_t event)
             if(tx_fifo->get_index!=tx_fifo->put_index)
             {
                 ch = tx_fifo->buffer[tx_fifo->get_index];
-                if(ops->putc(serial,ch)<0)
+                if(ops->put_char(serial,ch)<0)
                     break;
                 tx_fifo->get_index +=1;
                 if(tx_fifo->get_index>=tx_fifo->bufsz)

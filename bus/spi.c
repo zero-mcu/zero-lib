@@ -2,7 +2,7 @@
 #include <bus/spi.h>
 #include <chip/gpio.h>
 
-int spi_set_mode(spi_t *spi, spi_mode_t mode)
+int spi_set_mode(spi_t* spi, spi_mode_t mode)
 {
     ASSERT(spi);
 
@@ -12,7 +12,7 @@ int spi_set_mode(spi_t *spi, spi_mode_t mode)
     return 0;
 }
 
-int spi_set_speed(spi_t *spi, ze_u32_t speed)
+int spi_set_speed(spi_t* spi, ze_u32_t speed)
 {
     ASSERT(spi);
 
@@ -31,7 +31,7 @@ int spi_transfer(spi_t* spi, spi_msg_t* msgs, ze_size_t nmsg)
     return 0;
 }
 
-int spi_write(struct spi *spi, const ze_u8_t *wr_data, ze_size_t wr_len)
+int spi_write(spi_t* spi, const ze_u8_t *wr_data, ze_size_t wr_len)
 {
     ASSERT(spi);
     ASSERT(wr_data);
@@ -45,7 +45,7 @@ int spi_write(struct spi *spi, const ze_u8_t *wr_data, ze_size_t wr_len)
     return spi_transfer(spi, &msg, 1);
 }
 
-int spi_read(struct spi *spi, ze_u8_t *rd_data, ze_size_t rd_len)
+int spi_read(spi_t* spi, ze_u8_t *rd_data, ze_size_t rd_len)
 {
     ASSERT(spi);
     ASSERT(rd_data);
@@ -59,7 +59,7 @@ int spi_read(struct spi *spi, ze_u8_t *rd_data, ze_size_t rd_len)
     return spi_transfer(spi, &msg, 1);
 }
 
-int spi_write_then_read(struct spi *spi, const ze_u8_t *wr_data, ze_size_t wr_len, ze_u8_t *rd_data, ze_size_t rd_len)
+int spi_write_then_read(spi_t* spi, const ze_u8_t *wr_data, ze_size_t wr_len, ze_u8_t *rd_data, ze_size_t rd_len)
 {
     ASSERT(spi);
     ASSERT(wr_data);
@@ -77,7 +77,7 @@ int spi_write_then_read(struct spi *spi, const ze_u8_t *wr_data, ze_size_t wr_le
     return spi_transfer(spi, msgs, 2);
 }
 
-int spi_write_and_read(struct spi *spi, const ze_u8_t *wr_data, ze_u8_t *rd_data, ze_size_t len)
+int spi_write_and_read(spi_t* spi, const ze_u8_t *wr_data, ze_u8_t *rd_data, ze_size_t len)
 {
     ASSERT(spi);
     ASSERT(wr_data);

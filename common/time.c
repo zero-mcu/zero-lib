@@ -87,5 +87,8 @@ void sys_sleep(float sec)
 void sys_tick_inc(void)
 {
     zero_ticks++;
+#if CONFIG_USING_RTOS == 1
+    osSystickHandler();
+#endif
 }
 
