@@ -112,7 +112,7 @@ int i2c_read(i2c_t* i2c, i2c_dev_addr_t dev_addr, ze_u8_t* data, ze_size_t len);
   * @param wr_len: length of data to be write.
   * @retval 0 for success, otherwise -1.
   */
-int i2c_address_write(i2c_t* i2c, i2c_dev_addr_t dev_addr, i2c_addr_t address, const ze_u8_t* wr_data, ze_size_t wr_len);
+int i2c_client_write(i2c_t* i2c, i2c_dev_addr_t dev_addr, i2c_addr_t address, const ze_u8_t* wr_data, ze_size_t wr_len);
 
 /**
   * @brief This function is used to write and read data from i2c bus.
@@ -124,7 +124,7 @@ int i2c_address_write(i2c_t* i2c, i2c_dev_addr_t dev_addr, i2c_addr_t address, c
   * @param wr_len: length of data to be read.
   * @retval 0 for success, otherwise -1.
   */
-int i2c_address_read(i2c_t* i2c, i2c_dev_addr_t dev_addr, i2c_addr_t address, ze_u8_t* rd_data, ze_size_t rd_len);
+int i2c_client_read(i2c_t* i2c, i2c_dev_addr_t dev_addr, i2c_addr_t address, ze_u8_t* rd_data, ze_size_t rd_len);
 
 
 typedef struct i2c_switch {

@@ -61,7 +61,7 @@ static int at24cxx_write(at24cxx_t* at24cxx, ze_u32_t address, const ze_u8_t* wr
         else
             wr_len = length;
 
-        if(i2c_address_write(at24cxx->i2c, I2C_MAKE_7BIT_ADDR(dev_addr), I2C_MAKE_ADDR(address, chip_info->addr_size), wr_data, (ze_size_t)wr_len) < 0)
+        if(i2c_client_write(at24cxx->i2c, I2C_MAKE_7BIT_ADDR(dev_addr), I2C_MAKE_ADDR(address, chip_info->addr_size), wr_data, (ze_size_t)wr_len) < 0)
             break;
         length -= wr_len;
         wr_data += wr_len;
@@ -96,7 +96,7 @@ static int at24cxx_read(at24cxx_t* at24cxx, ze_u32_t address, ze_u8_t* rd_data, 
             rd_len = chip_info->page_size - (address & (chip_info->page_size - 1));
         else
             rd_len = length;
-        if(i2c_address_read(at24cxx->i2c, I2C_MAKE_7BIT_ADDR(dev_addr), I2C_MAKE_ADDR(address, chip_info->addr_size), rd_data, rd_len) < 0)
+        if(i2c_client_read(at24cxx->i2c, I2C_MAKE_7BIT_ADDR(dev_addr), I2C_MAKE_ADDR(address, chip_info->addr_size), rd_data, rd_len) < 0)
             break;
         length -= rd_len;
         rd_data += rd_len;
